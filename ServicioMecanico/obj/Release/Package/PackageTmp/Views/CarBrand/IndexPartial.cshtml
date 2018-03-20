@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ServicioMecanico.Models.CarBrand>
+
+<div class="col-md-10">
+
+    <select name="marca" id="marca" class="form-control">
+        <option selected="" disabled="">Seleccione una marca</option>
+        <optgroup label="marcas">
+            @foreach (var item in Model)
+            {
+                <option value="@item.IdCarBrand">@item.Description </option>
+            }
+        </optgroup>
+    </select>
+
+</div>

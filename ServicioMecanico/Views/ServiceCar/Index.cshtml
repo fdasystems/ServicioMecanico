@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ServicioMecanico.Models.ServicesCar>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Registrar nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id de servicio
+        </th>
+        <th>
+            Vehículo
+        </th>
+        <th>
+            Propietario
+        </th>
+        <th>
+            Servicio
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Precio
+        </th>
+        <th>
+            Observaciones
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdServicesCar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.CarBrand.Description)
+                (@Html.DisplayFor(modelItem => item.Car.LicensePlate))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Owner.Name)
+                &nbsp;
+                @Html.DisplayFor(modelItem => item.Car.Owner.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.Description)
+            </td>
+            <td>
+                @item.ServiceDate.ToShortDateString() 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observations)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdServicesCar }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdServicesCar })
+            </td>
+        </tr>
+    }
+
+</table>

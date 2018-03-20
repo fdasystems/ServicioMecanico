@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">Bienvenido a esta aplicacion ASP.NET MVC con la cual podra registrar servicios de autos. </p>
+    @if (!Request.IsAuthenticated)
+    {
+        <p>Recuerde que para iniciar debe acceder al sistema.</p>
+        @Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Primeros pasos</h2>
+        <p>
+            Para acceder al sistema debe registrarse.
+
+            Toque la opción "Registrarse" y complete los campos requeridos.
+
+            Recuerde que el password debe incluir al menos una letra en mayúscula, un caracter especial mas cualquier caracter alfanumérico.
+        </p>
+       
+    </div>
+    <div class="col-md-4">
+        <h2>Operando</h2>
+        <p>Una vez registrado deberá acceder al sistema con sus credenciales para ingresar datos.</p>
+        <p>En la seccion "Servicios a vehículos" Toque el boton "Registrar nuevo" para ingresar nuevo servicio.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Informaci&oacute;n adicional</h2>
+        <p>Descubra mas...</p>
+    </div>
+</div>

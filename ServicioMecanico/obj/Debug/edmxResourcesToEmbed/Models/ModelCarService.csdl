@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CarServiceEntitiesModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cars" EntityType="CarServiceModel.Car" />
+    <EntitySet Name="CarBrands" EntityType="CarServiceModel.CarBrand" />
+    <EntitySet Name="Owners" EntityType="CarServiceModel.Owner" />
+    <EntitySet Name="Services" EntityType="CarServiceModel.Service" />
+    <EntitySet Name="ServicesCars" EntityType="CarServiceModel.ServicesCar" />
+    <AssociationSet Name="FK_CarBrand_IdCarBrand" Association="CarServiceModel.FK_CarBrand_IdCarBrand">
+      <End Role="CarBrand" EntitySet="CarBrands" />
+      <End Role="Car" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarOwner" Association="CarServiceModel.FK_CarOwner">
+      <End Role="Owner" EntitySet="Owners" />
+      <End Role="Car" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServicesCar_IdCar" Association="CarServiceModel.FK_ServicesCar_IdCar">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="ServicesCar" EntitySet="ServicesCars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServicesCar_IdService" Association="CarServiceModel.FK_ServicesCar_IdService">
+      <End Role="Service" EntitySet="Services" />
+      <End Role="ServicesCar" EntitySet="ServicesCars" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="IdCar" />
+    </Key>
+    <Property Name="IdCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCarBrand" Type="Int32" Nullable="false" />
+    <Property Name="YearCar" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+    <Property Name="LicensePlate" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Observations" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="IdOwner" Type="Int32" />
+    <NavigationProperty Name="CarBrand" Relationship="CarServiceModel.FK_CarBrand_IdCarBrand" FromRole="Car" ToRole="CarBrand" />
+    <NavigationProperty Name="Owner" Relationship="CarServiceModel.FK_CarOwner" FromRole="Car" ToRole="Owner" />
+    <NavigationProperty Name="ServicesCars" Relationship="CarServiceModel.FK_ServicesCar_IdCar" FromRole="Car" ToRole="ServicesCar" />
+  </EntityType>
+  <EntityType Name="CarBrand">
+    <Key>
+      <PropertyRef Name="IdCarBrand" />
+    </Key>
+    <Property Name="IdCarBrand" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Cars" Relationship="CarServiceModel.FK_CarBrand_IdCarBrand" FromRole="CarBrand" ToRole="Car" />
+  </EntityType>
+  <EntityType Name="Owner">
+    <Key>
+      <PropertyRef Name="IdOwner" />
+    </Key>
+    <Property Name="IdOwner" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CardId" Type="Int32" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Observations" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Cars" Relationship="CarServiceModel.FK_CarOwner" FromRole="Owner" ToRole="Car" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="IdService" />
+    </Key>
+    <Property Name="IdService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Observations" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="ServicesCars" Relationship="CarServiceModel.FK_ServicesCar_IdService" FromRole="Service" ToRole="ServicesCar" />
+  </EntityType>
+  <EntityType Name="ServicesCar">
+    <Key>
+      <PropertyRef Name="IdServicesCar" />
+    </Key>
+    <Property Name="IdServicesCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCar" Type="Int32" Nullable="false" />
+    <Property Name="IdService" Type="Int32" Nullable="false" />
+    <Property Name="ServiceDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Observations" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Car" Relationship="CarServiceModel.FK_ServicesCar_IdCar" FromRole="ServicesCar" ToRole="Car" />
+    <NavigationProperty Name="Service" Relationship="CarServiceModel.FK_ServicesCar_IdService" FromRole="ServicesCar" ToRole="Service" />
+  </EntityType>
+  <Association Name="FK_CarBrand_IdCarBrand">
+    <End Type="CarServiceModel.CarBrand" Role="CarBrand" Multiplicity="1" />
+    <End Type="CarServiceModel.Car" Role="Car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarBrand">
+        <PropertyRef Name="IdCarBrand" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="IdCarBrand" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarOwner">
+    <End Type="CarServiceModel.Owner" Role="Owner" Multiplicity="0..1" />
+    <End Type="CarServiceModel.Car" Role="Car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owner">
+        <PropertyRef Name="IdOwner" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="IdOwner" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServicesCar_IdCar">
+    <End Type="CarServiceModel.Car" Role="Car" Multiplicity="1" />
+    <End Type="CarServiceModel.ServicesCar" Role="ServicesCar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="IdCar" />
+      </Principal>
+      <Dependent Role="ServicesCar">
+        <PropertyRef Name="IdCar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServicesCar_IdService">
+    <End Type="CarServiceModel.Service" Role="Service" Multiplicity="1" />
+    <End Type="CarServiceModel.ServicesCar" Role="ServicesCar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="IdService" />
+      </Principal>
+      <Dependent Role="ServicesCar">
+        <PropertyRef Name="IdService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

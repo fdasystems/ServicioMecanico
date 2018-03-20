@@ -1,0 +1,10 @@
+﻿@if  (Request.IsAuthenticated)
+{ 
+<ul class="nav navbar-nav">
+    <li>@Html.ActionLink("Autos", "Index", "Car")</li>
+    <li>@Html.ActionLink("Marcas", "Index", "CarBrand")</li>
+    <li>@Html.ActionLink("Dueños", "Index", "Owner")</li>
+    <li>@Html.ActionLink("Lista de Servicios", "Index", "Service")</li>
+    <li>@Html.ActionLink("Servicios a vehículos", "Index", "ServiceCar")</li>
+</ul>
+}

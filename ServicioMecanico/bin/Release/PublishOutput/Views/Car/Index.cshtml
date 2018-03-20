@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ServicioMecanico.Models.Car>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id Vehículo
+        </th>
+        <th>
+            Marca
+        </th>
+        <th>
+            Año
+        </th>
+        <th>
+            Patente
+        </th>
+        <th>
+            Dueño
+        </th>
+        <th>
+            Observaciones
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarBrand.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearCar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicensePlate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner.Name)
+            &nbsp;
+            @Html.DisplayFor(modelItem => item.Owner.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Observations)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IdCar }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IdCar })
+        </td>
+    </tr>
+}
+
+</table>
